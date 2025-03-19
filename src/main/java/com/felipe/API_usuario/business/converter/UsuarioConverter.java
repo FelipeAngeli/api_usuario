@@ -17,12 +17,14 @@ import java.util.stream.Collectors;
 public class UsuarioConverter {
 
     public Usuario paraUsuario(UsuarioDTO usuarioDTO){
-         return Usuario.builder()
+        return Usuario.builder()
                 .nome(usuarioDTO.getNome())
                 .email(usuarioDTO.getEmail())
                 .senha(usuarioDTO.getSenha())
-                .endereco(paraListaEndereco(usuarioDTO.getEndereco()))
-                .telefone(paraListaTelefone(usuarioDTO.getTelefone()))
+                .endereco(usuarioDTO.getEndereco() != null ?
+                        paraListaEndereco(usuarioDTO.getEndereco()) : null)
+                .telefone(usuarioDTO.getTelefone() != null ?
+                        paraListaTelefone(usuarioDTO.getTelefone()) : null)
                 .build();
     }
 
@@ -61,15 +63,16 @@ public class UsuarioConverter {
                 .build();
     }
 
-    //---
-
-    public UsuarioDTO paraUsuarioDTO(Usuario usuario){
+    public UsuarioDTO paraUsuarioDTO(Usuario usuarioDTO){
         return UsuarioDTO.builder()
-                .nome(usuario.getNome())
-                .email(usuario.getEmail())
-                .senha(usuario.getSenha())
-                .endereco(paraListaEnderecoDTO(usuario.getEndereco()))
-                .telefone(paraListaTelefoneDTO(usuario.getTelefone()))
+                .nome(usuarioDTO.getNome())
+                .email(usuarioDTO.getEmail())
+                .senha(usuarioDTO.getSenha())
+                .endereco(usuarioDTO.getEndereco() != null ?
+                        paraListaEnderecoDTO(usuarioDTO.getEndereco()) : null
+                )
+                .telefone(usuarioDTO.getTelefone() != null ?
+                        paraListaTelefoneDTO(usuarioDTO.getTelefone()) : null)
                 .build();
     }
 
