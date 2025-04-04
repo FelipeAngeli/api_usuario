@@ -1,9 +1,11 @@
 package com.felipe.API_usuario.controller;
 
 import com.felipe.API_usuario.business.UsuarioService;
+import com.felipe.API_usuario.business.ViaCepService;
 import com.felipe.API_usuario.business.dto.EnderecoDTO;
 import com.felipe.API_usuario.business.dto.TelefoneDTO;
 import com.felipe.API_usuario.business.dto.UsuarioDTO;
+import com.felipe.API_usuario.infrastructure.clients.ViaCepDTO;
 import com.felipe.API_usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    private final ViaCepService viaCepService;
 
     @PostMapping
     public ResponseEntity<UsuarioDTO> salvaUsuario(@RequestBody UsuarioDTO usuarioDTO){
@@ -74,6 +77,11 @@ public class UsuarioController {
     public ResponseEntity<TelefoneDTO> cadastroTelefone(@RequestBody TelefoneDTO dto,
                                                         @RequestHeader("Authorization") String token){
         return  ResponseEntity.ok(usuarioService.cadastroTelefone(token, dto));
+    }
+
+    @GetMapping("/endereco/{cep}")
+    public ResponseEntity<ViaCepDTO> buscardadosCep(@PathVariable("cep") String cep){
+        return ResponseEntity.ok(viaCepService.buscaDadosEndereco(cep));
     }
 
 }
